@@ -153,22 +153,38 @@ console.log( multiply2(2) );
 // classes are essentially blue prints for objects
 // can contain properties & methods
 // supports inheritance from other classes
+// 'this' behaves like constructor functions
+// inheritance behaves like 'protoypes'
 
-// logical layout
-	// class Person {
-	// 	name: = 'Max' // property
-	// 	call = () => { /*..*/} // method
-	// }
-
-
-
-//example of inheriting class properties methods
 
 
 // actual example
-class Person {
+class Human {
+
+	// constructor is default / function you can add to a class that will instantiate when the class is created
 	constructor() {
+		this.gender = 'male'
+	}
+
+	printGender() {
+		console.log(this.gender);
+	}
+}
+
+
+// example of inheriting class properties methods
+
+// extends - includes another classes properties / methods
+// Now the Person class has access to the Human classes properties
+class Person extends Human {
+
+	constructor() {
+
+		// super() - will execute the external classes constructor
+		super();
 		this.name = 'Maxxx';
+
+		this.gender = 'female';
 	}
 
 	printMyName123() {
@@ -179,7 +195,244 @@ class Person {
 // use this class to store an instance, using a const
 const person = new Person();
 
-// then execute 
+// then execute
+
 person.printMyName123();
+person.printGender();
 
 
+
+
+// --------------------------------------------------
+// Classes/ properties & methods - The EcmaScript 6 way - Must use babel complie
+	
+	// use this moving forward, & is the equivilant to the above classes
+
+
+class Humans {
+	genders = 'male';
+
+	printGenders = () => {
+		console.log(this.genders)
+	}
+}
+
+class Persons extends Humans {
+	names = 'Max';
+	genders = 'female';
+
+	printMyNames = () => {
+		console.log(this.names)
+	}
+}
+
+const persons = new Persons();
+
+persons.printGenders();
+persons.printMyNames();
+
+
+
+
+// --------------------------------------------------
+
+// Spread & Rest Operators '...'
+
+	// 3 dots '...' is the syntax required to access these operators, and how they work is determined by where they are placed.
+
+
+
+// Spread ---
+	
+	// Used to split up an array of elements OR object properties
+	// eg. - if have an old array and we want to add all the elements from that old array to a new array, and also add new elements to the new array on the fly, we would do the below:
+
+	/*
+		-- array example --
+		const newArray = [ ...oldArray, 1, 2]
+
+		-- property example --
+		const newObject = { ...o-ldObject, newObjProperty:5 }
+
+		// if the old object had an existing property, 'newObjProperty', then it would be overwritten by the new property 'newObjProperty:5'
+
+	*/
+
+	// Working 'Merge' example - arrays
+	const arrNums = [1,2,3];
+	const newNums = [...arrNums, 4];
+	console.log(newNums);
+
+	// console spits out, [1,2,3,4]
+
+	// if we didnt use the dots (merge operator) the console would look spit out this, [[1,2,3],4]
+
+
+	// Working 'Merge' example - Objects
+	const peeps = {
+		name:'Max'
+	};
+
+	const newPeeps = {
+
+		// this will copy all object peroperties found in peeps ande make them available to newPeeps
+		...peeps,
+
+		// here we add a new name:val pair that will added in addition to the properties copied from 'peeps'
+		age: 28
+	}
+
+
+// Rest --- (used less often)
+	
+	// used with function arguments - this will place all function arguments into an array.
+	// Just specify one alias 'args' in this case, and this will be the name of the array which will hold all arguments passed through that function.
+	// this allows us to easily apoply array methods to our arguments or do whatever we want to them	
+
+	/*
+		function sortArgs ( ...args ) {
+			return args.sort();
+		}
+	*/
+
+	// Working example
+	const filter = (...args) => {
+	  return args.filter(el => el > 1);
+	}
+
+	console.log(filter(1,2,3));
+
+	// console spits out, [2,3]
+
+
+
+
+// --------------------------------------------------
+
+// Destructuring - 
+	
+	// Allows you to extract array elements or object properties and store them in variables
+
+	// this is similar to spread, where spread will gather all elements, all properties etc, Destructuring allows you to pull out single elements properties and store them in variables, for both arrays and objects
+
+	
+	// layout example - Destructuring - arrays
+	/*
+		[a,b] = ['Hello', 'Max'];
+
+		console.log(a); // Hello
+		console.log(b); // Max
+	*/
+
+	// Destructuring Arrays - Working Example ---
+
+	//example 1
+	const newNewNums = [1,2,3];
+	[num1, num3] = numbers;
+
+	console.log(num1, num3);
+
+	// console spits out, 
+	// 1 
+	// 2
+
+	// example 2
+	const newNewNums = [1,2,3];
+	[num1, , num3] = numbers;
+
+	console.log(num1, num3);
+
+	// console spits out, 
+	// 1 
+	// 3
+
+
+
+	// layout example - Destructuring - objects
+	// use the curly braces on the left and target a property with its target name
+
+	/*
+		{ peepsName } = { peepsName: 'Max', peepsAge:28 }
+
+		// we only s
+		console.log(peepsName); // Max
+		console.log(peepsAge); // undefined
+	*/
+
+
+
+
+
+// --------------------------------------------------
+
+// Reference and primitive Types Refresher ---
+
+
+
+// primitive type
+
+const number = 1;
+
+// this will copy the value of number into num2
+const num2 = number;
+console.log(num2); // 1
+
+
+
+
+// reference type
+
+const person = {
+	name:'Max'
+};
+
+const secondPerson = person;
+
+//  this will print the same value as the 'person', but it wont have copied the value like a primitive type, instead it references the the 'person' properties / values 
+
+// if we declare person.name with a new value, this will be updated in all instances where the person object has been referenced, so if you said,
+
+// still prints the original value of person
+console.log( secondPerson ); // Max
+
+//then updated the person.name object property
+person.name = "Gav"; 
+
+// even though you called secondPerson, it still references person.name, hence why Gav is the value we see here
+console.log( secondPerson ) // Gav
+
+
+
+
+
+// to copy an object without reference we need to use spread '...'
+
+const person = {
+	name:'Max'
+};
+
+const secondPerson = {
+	...person
+};
+
+person.name = "Gav"; 
+
+console.log( secondPerson ); // Max - is outputed
+
+
+
+
+
+// --------------------------------------------------
+
+// Refreshing array functions ---
+
+
+// create a basic array
+const nunmbers = [1,2,3];
+
+// Array methods, like 'map()', all work in the same way. They take a function as an input (an arrow function in this case) and execute it on each item in the array, so therefore what we get in this arrowFunction is a number in the end, 'num' (but you can call it what ever you want)
+// Then it will map all the returns (results) to the new array 'doubleNumArray[]'  
+const doubleNumArray = numbers.map((num) => {
+	return num * 2;
+});
