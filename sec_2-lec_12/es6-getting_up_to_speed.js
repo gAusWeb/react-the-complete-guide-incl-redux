@@ -441,6 +441,7 @@ const doubleNumArray = numbers.map((num) => {
 /*
 	References for array functions --- 
 	
+	
 	Particularly important in this course are:
 
 	map()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
