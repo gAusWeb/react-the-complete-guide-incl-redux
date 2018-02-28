@@ -56,6 +56,18 @@ class App extends Component {
   }
 
   render() {
+
+    // inline CSS styles
+    // lets you target specific elems
+    // limiting when getting into advanced CSS
+    const style = {
+        backgroundColor: 'white',
+        font: 'inherit',
+        border: '1px solid blue',
+        padding: '8px',
+        cursor: 'pointer'
+    }
+
     return (
       <div className="App">
 
@@ -79,7 +91,9 @@ class App extends Component {
           // we call an arrow function within the click event - this anonymous shorthand arrow function automatically places a 'return' after the '=>', thus automatically returning the value once the click event is triggered
           // now we pass the data in the handler
         }
-        <button onClick={ () => this.switchNameHandler('MAXXXYY-BOYYY') }>Switch Name</button>
+        <button
+            style={ style } 
+            onClick={ () => this.switchNameHandler('MAXXXYY-BOYYY') }>Switch Name</button>
 
 
 

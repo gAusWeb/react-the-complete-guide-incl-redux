@@ -3,6 +3,9 @@
 
 import React from 'react';
 
+// import new CSS file
+import './Person.css';
+
 
 // this is a function component 
 // props - will you to pass dynamic data from another component to this one
@@ -10,7 +13,7 @@ const person = (props) => {
 	
 	// props.children = will access the children elements of dynamic 
 	return (
-		<div>
+		<div className="Person">
 			<p onClick={ props.click }>I'm {props.name} and I am {props.age} yrs old! </p>
 			<p>{ props.children }</p>
 
