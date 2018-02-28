@@ -22,7 +22,8 @@ class App extends Component {
     otherState: 'some other value'
   }
 
-  switchNameHandler = () => {
+  // pass in argument for the handler to receive data
+  switchNameHandler = ( newName ) => {
     //console.log('Was clicked!');
     
     // 'this' here, will only work when es6 arrow functions, otherwise 'this' will not refer to     the App class, and therefore will not hit that state property
@@ -32,9 +33,24 @@ class App extends Component {
     // IMPORTANT - Only two thing in React update the DOM, one is 'state', the other is 'props'
     this.setState({ 
       persons: [
-        { name: 'Maximilian', age: 28 },
+
+        // to pass that dynamic data of newName, there are two ways. The first using 'bind()' - See <button</button> element below
+        { name: newName, age: 28 },
         { name: 'Gav', age: 34 },
         { name: 'Mat', age: 35 }
+      ]
+    })
+  }
+
+  // here we are using a built in 'event' object. 
+  // This event object will automatically pass the data from the input in Person.js via props
+  // Usining the 'event' object, we extract the 'target' (which is the input element), then 'value' of the target (which is what the user enteres).
+  nameChangeHandler = (event) => {
+    this.setState({
+      persons: [
+        { name: 'Max', age: 28 },
+        { name: event.target.value, age: 30 },
+        { name: 'Mat', age: 32 }
       ]
     })
   }
@@ -51,11 +67,20 @@ class App extends Component {
           /* 
             --- click event in react ---
             - Call the method created above when this element is clicked
-            - DO NOT add perenthisis, as this will enoke the function straight away, instead of waiting for the event to handle it
+            - DO NOT add parentheses, as this will enoke the function straight away, instead of waiting for the event to handle it
             - 'this' - if you dont use 'this', you will run into errors, when the class is rendered at runtime.
           */ 
+
+
+          // --- TO pass DATA Mehod 2 
+            // - USE MEHOD 1 INSEAD,  when you can ---
+            // - This method can be inefficient re: performance
+          
+          // we call an arrow function within the click event - this anonymous shorthand arrow function automatically places a 'return' after the '=>', thus automatically returning the value once the click event is triggered
+          // now we pass the data in the handler
         }
-        <button onClick={ this.switchNameHandler }>Switch Name</button>
+        <button onClick={ () => this.switchNameHandler('MAXXXYY-BOYYY') }>Switch Name</button>
+
 
 
         {
@@ -74,12 +99,32 @@ class App extends Component {
         <Person name="Mat" age="34" />
 
 
-        {/* 
-          --- Dynamic example using 'state' ---
-        */}
-        <Person name={ this.state.persons[0].name } age={ this.state.persons[0].age } />
-        <Person name={ this.state.persons[1].name } age={ this.state.persons[1].age } />
-        <Person name={ this.state.persons[2].name } age={ this.state.persons[2].age } />
+        {
+          // --- Dynamic example using 'state' ---
+        }
+        <Person 
+          name={ this.state.persons[0].name } 
+          age={ this.state.persons[0].age } />
+        
+        <Person 
+          name={ this.state.persons[1].name } 
+          age={ this.state.persons[1].age } 
+
+
+          // --- TO pass DATA MEHOD 1 
+            // - perferred method of passing in data to a clickHandler ---
+
+          // the first way - use 'bind()'. 'this' (within 'bind'), binds 'this' to the class scope, just like when we used switchNameHandler's 'this'  
+          // here we pass the click handler (a method) through props, to the component, in this case 'Person', this is done by attaching another attribute to the <person /> compnent reference
+          click={ this.switchNameHandler.bind(this, 'Max!') } 
+
+          // here we name this next attribute 'changed' and pass it the new 'nameChangeHandler' which will enable us to pass this handler to the <Person /> component found in, Person.js. This allows us to extraxt user-data from the new input within that Person Component
+          changed={ this.nameChangeHandler } />
+        
+        <Person 
+          name={ this.state.persons[2].name } 
+          age={ this.state.persons[2].age } />
+
         <Person>{ this.state.otherState }</Person>
 
 
