@@ -440,7 +440,7 @@ const doubleNumArray = numbers.map((num) => {
 
 /*
 	References for array functions --- 
-	
+	 
 	
 	Particularly important in this course are:
 
