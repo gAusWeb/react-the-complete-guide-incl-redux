@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import Radium from 'radium'; // adds additional javscript / CSS capabilities
+
+// { StyleRoot } -  for transforming CSS, animations / media queries etc will need additional imports
+// import Radium, { StyleRoot } from 'radium'; // adds additional javscript / CSS capabilities
+
 import Person from './Person/Person';
+import PersonDemo2 from './PersonDemo2/PersonDemo2';
 
 class App extends Component {
 
@@ -47,20 +51,23 @@ class App extends Component {
 
   render() {
 
+    
     const style = {
       backgroundColor: '#5cb85c',
       color: 'white',
       font: 'inherit',
       border: '2px solid #3e8e3e',
       padding: '8px',
-      cursor: 'pointer',
-
+      cursor: 'pointer'
+      /*
       // now radium is installed we can user CSS pseudo selectors
       ':hover': {
         color:'black',
         backgroundColor: 'lightgreen'
       }
+      */
     }
+    
 
     let persons = null;
 
@@ -84,10 +91,32 @@ class App extends Component {
       style.backgroundColor = 'red'; style.border = '2px solid #bf0000';
 
       // now radium is installed we can user CSS pseudo selectors
+      /*
       style[':hover'] = {
         color:'black',
         backgroundColor: 'salmon'
       }
+      */
+    }
+
+    let personDemo2 = null;
+
+    //let PersonDemo2 = null;
+
+    if ( this.state.showPersons ) {
+      personDemo2 = (
+        <div>
+          { this.state.persons.map((demoPerson2, index) => {
+            return <PersonDemo2 
+              click   = { () => this.deletePersonHandler(index) } 
+              name    = { demoPerson2.name } 
+              age     = { demoPerson2.age } 
+              key     = { demoPerson2.id }
+              changed   = { (event) => this.nameChangeHandler(event, demoPerson2.id) }
+            />
+          })}
+        </div>
+      );
     }
 
 
@@ -106,22 +135,28 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
+      // <StyleRoot> - for transforming CSS, animations / media queries etc will need additional imports
+      //<StyleRoot>
+          <div className="App">
 
-        <h1>Hi, I am a fresh change</h1>
-        <p className={classes.join(' ')}>This is really Working!!</p>
+            <h1>Hi, I am a fresh change</h1>
+            <p className={classes.join(' ')}>This is really Working!!</p>
 
-        <button
-          style={ style } 
-          onClick={ this.togglePersonsHandler }>Toggle Persons
-        </button>
+            <button
+              style={ style } 
+              onClick={ this.togglePersonsHandler }>Toggle Persons
+            </button>
 
-        {persons}
-          
-      </div>
+            { persons }
+            { personDemo2 }
+              
+          </div>
+        //</StyleRoot>
+        // END <StyleRoot>
       );
     }
   }
 
 
-export default Radium(App);
+//export default Radium(App);
+export default App;
