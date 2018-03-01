@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import './App.css';
 
 // { StyleRoot } -  for transforming CSS, animations / media queries etc will need additional imports
 // import Radium, { StyleRoot } from 'radium'; // adds additional javscript / CSS capabilities
+
+
+// New CSS Module method 
+// This is a javascripit object that give you access to a string of your CSS styles, but which have been adjusted to be unique to this App module
+// Setup:  - npm run eject - see 'sec6-lec66'
+import classes from './App.css';
 
 import Person from './Person/Person';
 import PersonDemo2 from './PersonDemo2/PersonDemo2';
@@ -51,7 +56,7 @@ class App extends Component {
 
   render() {
 
-    
+    /*
     const style = {
       backgroundColor: '#5cb85c',
       color: 'white',
@@ -59,17 +64,18 @@ class App extends Component {
       border: '2px solid #3e8e3e',
       padding: '8px',
       cursor: 'pointer'
-      /*
+      
       // now radium is installed we can user CSS pseudo selectors
       ':hover': {
         color:'black',
         backgroundColor: 'lightgreen'
       }
-      */
+      
     }
-    
+    */
 
-    let persons = null;
+    let persons = null,
+        btnClass = '';
 
     // setting dynamic CSS
     if (this.state.showPersons) {
@@ -88,7 +94,7 @@ class App extends Component {
       );
 
       // here we alter the 'style' object's values, because it is all just javscript at the end of the day.
-      style.backgroundColor = 'red'; style.border = '2px solid #bf0000';
+      // style.backgroundColor = 'red'; style.border = '2px solid #bf0000';
 
       // now radium is installed we can user CSS pseudo selectors
       /*
@@ -117,6 +123,8 @@ class App extends Component {
           })}
         </div>
       );
+
+      btnClass = classes.Red;
     }
 
 
@@ -126,25 +134,28 @@ class App extends Component {
     // let classes = ['red', 'bold'].join(' '); // returns 'red bold'
 
 
-    const classes = [];
+    const assignedClasses = [];
     if ( this.state.persons.length <= 2 ) {
-      classes.push('red'); // classes = ['red']
+      assignedClasses.push( classes.red ); // assignedClasses = ['red']
     } 
     if ( this.state.persons.length <= 1 ) {
-      classes.push('bold'); // classes = ['red', 'bold']
+      assignedClasses.push( classes.bold ); // assignedClasses = ['red', 'bold']
     }
 
     return (
       // <StyleRoot> - for transforming CSS, animations / media queries etc will need additional imports
       //<StyleRoot>
-          <div className="App">
+
+          // here we take a normal class name and make it unique so we can isolate it to this one module - npm run eject - see 'sec6-lec66'
+          <div className={classes.App}>
 
             <h1>Hi, I am a fresh change</h1>
-            <p className={classes.join(' ')}>This is really Working!!</p>
+            <p className={assignedClasses.join(' ')}>This is really Working!!</p>
 
             <button
-              style={ style } 
+            className={ btnClass } 
               onClick={ this.togglePersonsHandler }>Toggle Persons
+            }
             </button>
 
             { persons }
