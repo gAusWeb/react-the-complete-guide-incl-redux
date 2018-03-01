@@ -39,7 +39,7 @@ class App extends Component {
     
     const persons = [...this.state.persons];
     persons[personIndex] = person;
-    
+
     this.setState({ persons: persons })
   }
 
@@ -156,7 +156,6 @@ class App extends Component {
             <button
             className={ btnClass } 
               onClick={ this.togglePersonsHandler }>Toggle Persons
-            }
             </button>
 
             { persons }

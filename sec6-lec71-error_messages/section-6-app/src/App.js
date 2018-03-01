@@ -155,7 +155,6 @@ class App extends Component {
             <button
             className={ btnClass } 
               onClick={ this.togglePersonsHandler }>Toggle Persons
-            }
             </button>
 
             { persons }
