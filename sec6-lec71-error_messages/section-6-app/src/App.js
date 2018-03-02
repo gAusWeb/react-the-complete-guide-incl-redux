@@ -11,6 +11,8 @@ import classes from './App.css';
 
 import Person from './Person/Person';
 import PersonDemo2 from './PersonDemo2/PersonDemo2';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+
 
 class App extends Component {
 
@@ -113,13 +115,15 @@ class App extends Component {
       personDemo2 = (
         <div>
           { this.state.persons.map((demoPerson2, index) => {
-            return <PersonDemo2 
+
+            // wrap with ErrorBoundary
+            // we had to move the 'key', beacuse the key must always be on the outer most element
+            return <ErrorBoundary key = { demoPerson2.id }><PersonDemo2 
               click   = { () => this.deletePersonHandler(index) } 
               name    = { demoPerson2.name } 
               age     = { demoPerson2.age } 
-              key     = { demoPerson2.id }
               changed   = { (event) => this.nameChangeHandler(event, demoPerson2.id) }
-            />
+            /></ErrorBoundary>
           })}
         </div>
       );
