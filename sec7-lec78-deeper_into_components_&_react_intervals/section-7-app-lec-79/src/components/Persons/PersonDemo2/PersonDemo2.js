@@ -12,5 +12,4 @@ const PersonDemo2 = (props) => {
 	)
 }
 
-// export default Radium(PersonDemo2);
 export default PersonDemo2;
