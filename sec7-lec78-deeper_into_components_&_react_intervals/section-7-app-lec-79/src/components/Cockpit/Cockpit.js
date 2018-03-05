@@ -1,14 +1,15 @@
 import React from 'react';
 import classes from './Cockpit.css';
+import Auxx from '../../hoc/Auxx';
 
 const cockpit = (props) => {
 
 	const assignedClasses = [];
 
-	let btnClass = '';
+	let btnClass = classes.Button;
 
 	if (props.showPersons) {
-	    btnClass = classes.Red;
+	    btnClass = [classes.Button, classes.Red].join(' ');
 	}
 
 	if ( props.persons.length <= 2 ) {
@@ -22,7 +23,10 @@ const cockpit = (props) => {
 
 	return (
 		// this will scope the css to our component 
-		<div className={classes.Cockpit}>
+		
+		// Auxx (aka, fragment) - is returning / assigning the CSS classes via 'hox/Auxx'
+		// you dont have to use 'Auxx', you could simple use '<>' & '</>'
+		<Auxx>
 			<h1>{ props.appTitle }</h1>
 
 			<p className={assignedClasses.join(' ')}>This is really Working!!</p>
@@ -31,7 +35,7 @@ const cockpit = (props) => {
 				className={btnClass}
 				onClick={ props.clicked }>Toggle Persons
 			</button>
-		</div>
+		</Auxx>
 	);
 }
 
